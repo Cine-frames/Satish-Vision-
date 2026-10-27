@@ -1,0 +1,2817 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>SATISH_VISION | Cinematographer, Lighting & Visual Storyteller</title>
+
+    <style>
+        /* ===================================================
+           1. RESET & CINEMATIC PALETTE
+        =================================================== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-obsidian: #06070a;
+            --bg-card: #0e1118;
+            --bg-card-hover: #151b27;
+            --border-subtle: rgba(255, 255, 255, 0.09);
+            --border-amber: rgba(245, 158, 11, 0.55);
+            --amber-cine: #f59e0b;
+            --amber-warm: #fbbf24;
+            --cyan-cine: #06b6d4;
+            --red-rec: #ef4444;
+            --whatsapp-green: #25d366;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --text-dim: #6b7280;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background-color: var(--bg-obsidian);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.5;
+            overflow-x: hidden;
+            width: 100%;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .hud-bracket {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-color: var(--amber-cine);
+            pointer-events: none;
+        }
+
+        .hud-tl {
+            top: 10px;
+            left: 10px;
+            border-top: 2px solid;
+            border-left: 2px solid;
+        }
+
+        .hud-tr {
+            top: 10px;
+            right: 10px;
+            border-top: 2px solid;
+            border-right: 2px solid;
+        }
+
+        .hud-bl {
+            bottom: 10px;
+            left: 10px;
+            border-bottom: 2px solid;
+            border-left: 2px solid;
+        }
+
+        .hud-br {
+            bottom: 10px;
+            right: 10px;
+            border-bottom: 2px solid;
+            border-right: 2px solid;
+        }
+
+        .cine-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 1rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .cine-card:hover {
+            border-color: var(--border-amber);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 720px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--amber-cine);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-size: 1.95rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.6rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-desc {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-amber {
+            background: linear-gradient(135deg, var(--amber-cine), var(--amber-warm));
+            color: #000000;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35);
+        }
+
+        .btn-amber:hover {
+            opacity: 0.95;
+            transform: translateY(-2px);
+        }
+
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-subtle);
+            color: #ffffff;
+        }
+
+        .btn-glass:hover {
+            border-color: var(--amber-cine);
+            color: var(--amber-cine);
+        }
+
+        .btn-cyan {
+            background: rgba(6, 182, 212, 0.12);
+            border: 1px solid rgba(6, 182, 212, 0.4);
+            color: var(--cyan-cine);
+        }
+
+        /* ===================================================
+           2. TOP CINEMA STATUS BAR & NAVIGATION
+        =================================================== */
+        .top-hud {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 28px;
+            background: rgba(6, 7, 10, 0.96);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            z-index: 990;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--text-dim);
+        }
+
+        .top-hud .inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        .rec-dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            background: var(--red-rec);
+            border-radius: 50%;
+            margin-right: 4px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.4;
+                transform: scale(0.85);
+            }
+        }
+
+        nav.site-navbar {
+            position: fixed;
+            top: 28px;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: rgba(12, 15, 22, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+            z-index: 980;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        nav.site-navbar .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .brand-badge {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--amber-cine), var(--amber-warm));
+            color: #000;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+
+        .brand-name {
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+        }
+
+        .brand-name span {
+            color: var(--amber-cine);
+        }
+
+        .desktop-nav-links {
+            display: none;
+            align-items: center;
+            gap: 1.4rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .desktop-nav-links a:hover {
+            color: var(--amber-cine);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* NATIVE MENU BUTTON (WORKS WITH & WITHOUT JAVASCRIPT) */
+        .menu-trigger-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: linear-gradient(135deg, #1b212f, #222a3c);
+            border: 1px solid rgba(245, 158, 11, 0.55);
+            color: #fff;
+            padding: 0.5rem 0.95rem;
+            border-radius: 0.6rem;
+            font-size: 0.78rem;
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            cursor: pointer;
+            font-weight: 800;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .menu-trigger-btn:hover {
+            background: var(--amber-cine);
+            color: #000;
+            border-color: var(--amber-cine);
+        }
+
+        /* ===================================================
+           3. ZERO-FAIL NATIVE CSS MODAL SYSTEM (:target BASED)
+           Works in Chrome, Safari, AND inside Android HTML Previewers!
+        =================================================== */
+        #featureMenuModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(4, 5, 8, 0.98);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            z-index: 99999;
+            display: none;
+            /* Hidden by default */
+            flex-direction: column;
+            overflow-y: auto;
+            padding: 1.25rem 1rem 3.5rem;
+        }
+
+        /* NATIVE CSS TRIGGER: When URL has #featureMenuModal */
+        #featureMenuModal:target,
+        #featureMenuModal.active {
+            display: flex !important;
+        }
+
+        .menu-modal-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .menu-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 1.75rem;
+        }
+
+        .menu-close-btn {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            border: 1px solid var(--border-subtle);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            text-decoration: none;
+        }
+
+        .menu-close-btn:hover {
+            background: var(--red-rec);
+            border-color: var(--red-rec);
+        }
+
+        .menu-grid-features {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.85rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .feature-item-card {
+            background: #111520;
+            border: 1px solid var(--border-subtle);
+            border-radius: 0.85rem;
+            padding: 1rem 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .feature-item-card:hover {
+            background: #171d2b;
+            border-color: var(--amber-cine);
+            transform: translateX(4px);
+        }
+
+        .feature-icon-box {
+            width: 42px;
+            height: 42px;
+            border-radius: 0.65rem;
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--amber-cine);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .feature-info h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.15rem;
+        }
+
+        .feature-info p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        .feature-arrow {
+            margin-left: auto;
+            color: var(--amber-cine);
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        /* ===================================================
+           4. HERO SECTION
+        =================================================== */
+        .hero-section {
+            padding-top: 6.5rem;
+            padding-bottom: 3.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-box {
+            padding: 2.25rem 1.25rem;
+            text-align: center;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.85rem;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--border-amber);
+            border-radius: 9999px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-size: 2.25rem;
+            font-weight: 900;
+            line-height: 1.15;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero-title .gradient-text {
+            background: linear-gradient(135deg, var(--amber-warm), var(--amber-cine), #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-bio {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 1.75rem;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero-highlights {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 1.5rem;
+            text-align: left;
+        }
+
+        .highlight-item {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-subtle);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+        }
+
+        .highlight-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            display: block;
+        }
+
+        .highlight-val {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* ===================================================
+           5. FOUR CORE CRAFT PILLARS
+        =================================================== */
+        .section-block {
+            padding: 4rem 0;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        .pillar-card {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .pillar-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .pillar-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--amber-cine);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .pillar-num {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+        }
+
+        .pillar-tag {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            color: var(--amber-cine);
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+
+        .pillar-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .pillar-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-weight: 300;
+        }
+
+        /* ===================================================
+           6. INTERACTIVE 3-POINT LIGHTING LAB
+        =================================================== */
+        .lighting-stage-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .viewport-container {
+            padding: 0.75rem;
+        }
+
+        .lighting-viewport {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            background: #06070a;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .light-layer {
+            position: absolute;
+            inset: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+        }
+
+        #sim-ambient {
+            background: linear-gradient(to top, rgba(80, 40, 20, 0.35), transparent 70%);
+        }
+
+        #sim-haze {
+            background: radial-gradient(ellipse at center, rgba(245, 158, 11, 0.12) 0%, rgba(6, 182, 212, 0.08) 50%, transparent 80%);
+        }
+
+        #sim-key {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.45) 0%, rgba(245, 158, 11, 0.1) 50%, transparent 80%);
+        }
+
+        #sim-fill {
+            background: linear-gradient(225deg, rgba(255, 255, 255, 0.22) 0%, transparent 60%);
+        }
+
+        #sim-rim {
+            background: linear-gradient(45deg, transparent 40%, rgba(6, 182, 212, 0.45) 100%);
+        }
+
+        .subject-avatar {
+            position: relative;
+            z-index: 10;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: #1f2430;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            color: #9ca3af;
+        }
+
+        .viewport-hud {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            padding: 0.4rem 0.6rem;
+            border-radius: 0.4rem;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-dim);
+            border: 1px solid var(--border-subtle);
+            z-index: 20;
+        }
+
+        .controls-card {
+            padding: 1.25rem;
+        }
+
+        .control-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.65rem 0.85rem;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--border-subtle);
+            border-radius: 0.65rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .control-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-name {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .control-desc {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-dim);
+        }
+
+        .btn-toggle {
+            padding: 0.25rem 0.65rem;
+            border-radius: 0.4rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-toggle.on {
+            background: var(--amber-cine);
+            color: #000;
+        }
+
+        .btn-toggle.off {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-dim);
+        }
+
+        /* ===================================================
+           7. COLOR GRADING SLIDER
+        =================================================== */
+        .slider-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0.75rem;
+        }
+
+        .split-view {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            cursor: ew-resize;
+            user-select: none;
+        }
+
+        .split-view img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .raw-clip {
+            position: absolute;
+            inset: 0;
+            width: 50%;
+            overflow: hidden;
+            border-right: 2px solid var(--amber-cine);
+        }
+
+        .raw-clip img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.25) brightness(1.25) contrast(0.75);
+        }
+
+        .tag-badge {
+            position: absolute;
+            top: 10px;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.35rem;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .tag-badge.raw {
+            left: 10px;
+            color: var(--amber-cine);
+        }
+
+        .tag-badge.graded {
+            right: 10px;
+            color: var(--cyan-cine);
+        }
+
+        .handle-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .handle-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--amber-cine);
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 900;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .range-slider-bar {
+            width: 100%;
+            margin-top: 1rem;
+            accent-color: var(--amber-cine);
+            height: 4px;
+        }
+
+        /* ===================================================
+           8. SELECTED WORKS (3 TABS ONLY)
+        =================================================== */
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            padding: 0.45rem 0.85rem;
+            border-radius: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: var(--amber-cine);
+            color: #000;
+            border-color: var(--amber-cine);
+            font-weight: 700;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        .project-card {
+            border-radius: 0.85rem;
+            overflow: hidden;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            cursor: pointer;
+            transition: transform 0.25s, border-color 0.25s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-amber);
+        }
+
+        .project-img-box {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .project-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-cat-pill {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(0, 0, 0, 0.75);
+            border: 1px solid var(--border-amber);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.35rem;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--amber-cine);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .project-body {
+            padding: 1rem;
+        }
+
+        .project-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+
+        .project-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* ===================================================
+           9. BTS & GEAR
+        =================================================== */
+        .bts-grid,
+        .gear-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        .bts-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 0.85rem;
+            overflow: hidden;
+        }
+
+        .bts-card img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+        }
+
+        .bts-info {
+            padding: 1rem;
+        }
+
+        .gear-card {
+            padding: 1.25rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 0.85rem;
+        }
+
+        .gear-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--cyan-cine);
+        }
+
+        .gear-list {
+            list-style: none;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .gear-list li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .gear-list li::before {
+            content: "•";
+            color: var(--amber-cine);
+            font-size: 1rem;
+        }
+
+        /* ===================================================
+           10. SOCIAL MEDIA & DIRECT CHANNELS
+        =================================================== */
+        .social-channels-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.85rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: #111520;
+            border: 1px solid var(--border-subtle);
+            border-radius: 0.85rem;
+            padding: 1rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .social-link-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-amber);
+        }
+
+        .social-icon-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .icon-wa {
+            background: #25d366;
+        }
+
+        .icon-insta {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        .icon-yt {
+            background: #ff0000;
+        }
+
+        .icon-li {
+            background: #0a66c2;
+        }
+
+        .icon-mail {
+            background: var(--amber-cine);
+            color: #000;
+        }
+
+        .social-info h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .social-info p {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        /* ===================================================
+           11. CONTACT & WHATSAPP SHOOT BUILDER
+        =================================================== */
+        .contact-box {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 2rem 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+            font-weight: 600;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-subtle);
+            padding: 0.75rem 0.85rem;
+            border-radius: 0.5rem;
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--amber-cine);
+        }
+
+        .btn-whatsapp-submit {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: #ffffff;
+            width: 100%;
+            padding: 0.95rem;
+            font-size: 0.95rem;
+            font-weight: 800;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            text-decoration: none;
+        }
+
+        .btn-whatsapp-submit:hover {
+            opacity: 0.95;
+            transform: translateY(-2px);
+        }
+
+        .floating-whatsapp-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 950;
+            background: #25d366;
+            color: #ffffff;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.45);
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .floating-whatsapp-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* ===================================================
+           12. FOOTER & MODALS (:target NATIVE TRIGGER)
+        =================================================== */
+        footer.site-footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 2.5rem 1rem;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.94);
+            backdrop-filter: blur(8px);
+            z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        /* Opens natively when URL hash matches */
+        .modal-overlay:target,
+        .modal-overlay.open {
+            display: flex !important;
+        }
+
+        .modal-box {
+            background: #11141e;
+            border: 1px solid var(--border-subtle);
+            border-radius: 1rem;
+            width: 100%;
+            max-width: 750px;
+            padding: 1.25rem;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            text-decoration: none;
+        }
+
+        .modal-close-btn:hover {
+            background: var(--red-rec);
+        }
+
+        /* Responsive Breakpoints */
+        @media (min-width: 640px) {
+            .hero-title {
+                font-size: 3.25rem;
+            }
+
+            .pillars-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .bts-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gear-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-highlights {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .social-channels-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .menu-grid-features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .desktop-nav-links {
+                display: flex;
+            }
+
+            .pillars-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .lighting-stage-grid {
+                grid-template-columns: 8fr 4fr;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .bts-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .gear-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .social-channels-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 0. TOP CINEMA STATUS HUD -->
+    <div class="top-hud">
+        <div class="inner">
+            <div>
+                <span class="rec-dot"></span>
+                <span style="color: var(--red-rec); font-weight:700;">REC [STANDBY]</span>
+                <span style="margin: 0 6px;">|</span>
+                <span>24.000 FPS</span>
+                <span style="margin: 0 6px;">|</span>
+                <span style="color: var(--amber-cine)">180° SHUTTER</span>
+            </div>
+            <div>
+                <span style="color: #10b981;">● Delhi NCR &bull; Available</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <nav class="site-navbar">
+        <div class="nav-inner">
+            <a href="#hero" class="brand-logo">
+                <div class="brand-badge">SV</div>
+                <div class="brand-name">SATISH<span>_VISION</span></div>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="desktop-nav-links">
+                <a href="#skills">Pillars</a>
+                <a href="#lighting-lab" style="color: var(--amber-cine);">Lighting Lab</a>
+                <a href="#grading-slider">Color Grade</a>
+                <a href="#portfolio">Works</a>
+                <a href="#bts">BTS</a>
+                <a href="#gear">Kit</a>
+                <a href="#social-channels">Socials</a>
+                <a href="#contact" style="color: var(--cyan-cine);">Book Shoot</a>
+            </div>
+
+            <!-- Actions (Uses Native Anchors: 100% Clickable on every mobile phone!) -->
+            <div class="nav-actions">
+                <a href="#showreelModal" class="btn btn-amber" style="padding: 0.45rem 0.85rem; font-size: 0.72rem;">
+                    ▶ Reel
+                </a>
+
+                <!-- NATIVE MENU BUTTON (NEVER FAILS TO OPEN) -->
+                <a href="#featureMenuModal" class="menu-trigger-btn" aria-label="Open Features Menu">
+                    <span style="font-size:1.1rem; line-height:1;">☰</span>
+                    <span>Menu</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================================================
+         CINEMATIC FULL FEATURE MENU MODAL
+         (Natively opens when you click Menu!)
+    =================================================== -->
+    <div id="featureMenuModal">
+        <div class="menu-modal-container">
+            <div class="menu-modal-header">
+                <div>
+                    <div
+                        style="font-size:0.75rem; font-family:var(--font-mono); color:var(--amber-cine); text-transform:uppercase; font-weight:700;">
+                        Navigation Index
+                    </div>
+                    <div style="font-size:1.25rem; font-weight:800; color:#fff;">
+                        SATISH_VISION Core Features
+                    </div>
+                </div>
+                <!-- Native Close Button -->
+                <a href="#" class="menu-close-btn">
+                    ✕ Close Menu
+                </a>
+            </div>
+
+            <div class="menu-grid-features">
+                <a href="#hero" class="feature-item-card">
+                    <div class="feature-icon-box">🏠</div>
+                    <div class="feature-info">
+                        <h4>01. Home &amp; Hero Viewfinder</h4>
+                        <p>Director hook, live availability, and cinematography overview.</p>
+                    </div>
+                    <div class="feature-arrow">&rarr;</div>
+                </a>
+
+                <a href="#skills" class="feature-item-card">
+                    <div class="feature-icon-box">🛡️</div>
+                    <div class="feature-info">
+                        <h4>02. The 4 Craft Pillars</h4>
+                        <p>Cinematography, 3-point lighting setups, photography &amp; editing.</p>
+                    </div>
+                    <div class="feature-arrow">&rarr;</div>
+                </a>
+
+                <a href="#lighting-lab" class="feature-item-card" style="border-color: rgba(245,158,11,0.5);">
+                    <div class="feature-icon-box" style="background:var(--amber-cine); color:#000;">💡</div>
+                    <div class="feature-info">
+                        <h4 style="color:var(--amber-cine);">03. 3-Point Lighting Lab (Interactive)</h4>
+                        <p>Live toggle for Key, Fill, Rim &amp; Haze with contrast ratio ratios.</p>
+                    </div>
+                    <div class="feature-arrow" style="color:var(--amber-cine);">&rarr;</div>
+                </a>
+
+                <a href="#grading-slider" class="feature-item-card">
+                    <div class="feature-icon-box">🎨</div>
+                    <div class="feature-info">
+                        <h4>04. Raw vs Rec.709 Color Grade</h4>
+                        <p>Interactive draggable slider comparing flat Log with final grade.</p>
+                    </div>
+                    <div class="feature-arrow">&rarr;</div>
+                </a>
+
+                <a href="#portfolio" class="feature-item-card">
+                    <div class="feature-icon-box">🎬</div>
+                    <div class="feature-info">
+                        <h4>05. Selected Works &amp; Tests</h4>
+                        <p>Filtered by Cinematography, Photography &amp; Video Editing.</p>
+                    </div>
+                    <div class="feature-arrow">&rarr;</div>
+                </a>
+
+                <a href="#bts" class="feature-item-card">
+                    <div class="feature-icon-box">📹</div>
+                    <div class="feature-info">
+                        <h4>06. Behind The Scenes (BTS)</h4>
+                        <p>On-set camera rigging, light modifiers, and field discipline.</p>
+                    </div>
+                    <div class="feature-arrow">&rarr;</div>
+                </a>
+
+                <a href="#gear" class="feature-item-card">
+                    <div class="feature-icon-box">🎒</div>
+                    <div class="feature-info">
+                        <h4>07. Gear Locker &amp; Tech Kit</h4>
+                        <p>Cine rigs, prime lenses, COB studio lights, and editing software.</p>
+                    </div>
+                    <div class="feature-arrow">&rarr;</div>
+                </a>
+
+                <a href="#social-channels" class="feature-item-card" style="border-color: rgba(6,182,212,0.5);">
+                    <div class="feature-icon-box" style="background:var(--cyan-cine); color:#000;">🌐</div>
+                    <div class="feature-info">
+                        <h4 style="color:var(--cyan-cine);">08. Social Media &amp; Handles</h4>
+                        <p>Connect on WhatsApp, Instagram, YouTube, and LinkedIn.</p>
+                    </div>
+                    <div class="feature-arrow" style="color:var(--cyan-cine);">&rarr;</div>
+                </a>
+
+                <a href="#contact" class="feature-item-card" style="border-color: rgba(37,211,102,0.5);">
+                    <div class="feature-icon-box" style="background:#25d366; color:#000;">💬</div>
+                    <div class="feature-info">
+                        <h4 style="color:#25d366;">09. Book A Shoot Direct</h4>
+                        <p>Configure shoot details and transmit instant brief on WhatsApp.</p>
+                    </div>
+                    <div class="feature-arrow" style="color:#25d366;">&rarr;</div>
+                </a>
+            </div>
+
+            <!-- Direct Fast Action Buttons -->
+            <div style="display:flex; flex-wrap:wrap; gap:0.75rem;">
+                <a href="#showreelModal" class="btn btn-amber" style="flex:1;">
+                    ▶ Watch 2.39:1 Showreel
+                </a>
+                <a href="https://wa.me/919876543210?text=Hi%20Satish,%20I%20saw%20your%20portfolio%20and%20want%20to%20discuss%20a%20shoot."
+                    target="_blank" class="btn" style="background:#25d366; color:#000; flex:1;">
+                    💬 Open WhatsApp Chat
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. HERO SECTION -->
+    <section id="hero" class="hero-section">
+        <div class="container">
+            <div class="cine-card hero-box">
+                <div class="hud-bracket hud-tl"></div>
+                <div class="hud-bracket hud-tr"></div>
+                <div class="hud-bracket hud-bl"></div>
+                <div class="hud-bracket hud-br"></div>
+
+                <div class="status-pill">
+                    <span style="color:#10b981;">●</span> Available For Shoots: <strong>Delhi NCR &amp;
+                        Pan-India</strong>
+                </div>
+
+                <h1 class="hero-title">
+                    SATISH <br />
+                    <span class="gradient-text">VISUAL STORYTELLER &bull; DOP</span>
+                </h1>
+
+                <p class="hero-bio">
+                    Trained in motivated camera movement, 3-point continuous lighting ratios, manual focal storytelling,
+                    and timeline editing. Shoot-ready for Indie Films, Music Videos, Brand Commercials &amp; Portraits.
+                </p>
+
+                <div class="hero-cta">
+                    <a href="#showreelModal" class="btn btn-amber">▶ Watch Showreel</a>
+                    <a href="#lighting-lab" class="btn btn-glass">💡 Lighting Lab</a>
+                    <a href="#contact" class="btn btn-cyan">✉ Book Direct Shoot</a>
+                </div>
+
+                <div class="hero-highlights">
+                    <div class="highlight-item">
+                        <span class="highlight-label">Focus</span>
+                        <span class="highlight-val">Camera &amp; Lighting</span>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-label">Lighting</span>
+                        <span class="highlight-val" style="color:var(--amber-cine);">Key, Fill &amp; Rim</span>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-label">Aspiration</span>
+                        <span class="highlight-val" style="color:var(--cyan-cine);">FTII JET Cine</span>
+                    </div>
+                    <div class="highlight-item">
+                        <span class="highlight-label">Pipeline</span>
+                        <span class="highlight-val" style="color:#10b981;">S-Log3 to Rec.709</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. FOUR CORE PILLARS -->
+    <section id="skills" class="section-block">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Capabilities</span>
+                <h2 class="section-title">The 4 Core Craft Pillars</h2>
+                <p class="section-desc">Synergy between camera movement, lighting physics, photography aesthetics, and
+                    editing rhythm.</p>
+            </div>
+
+            <div class="pillars-grid">
+                <div class="cine-card pillar-card">
+                    <div>
+                        <div class="pillar-top">
+                            <div class="pillar-icon">🎬</div>
+                            <span class="pillar-num">01</span>
+                        </div>
+                        <span class="pillar-tag">Camera &amp; Framing</span>
+                        <h3 class="pillar-title">Cinematography</h3>
+                        <p class="pillar-desc">24 FPS pacing, 180° shutter rule, fluid gimbal &amp; handheld rigs, and
+                            cinematic 2.39:1 scope composition.</p>
+                    </div>
+                </div>
+
+                <div class="cine-card pillar-card">
+                    <div>
+                        <div class="pillar-top">
+                            <div class="pillar-icon">💡</div>
+                            <span class="pillar-num">02</span>
+                        </div>
+                        <span class="pillar-tag">Lighting Setups</span>
+                        <h3 class="pillar-title">3-Point Lighting</h3>
+                        <p class="pillar-desc">Practical setups: Key (3200K/5600K), fill ratio balance, hair kicker rim
+                            separation, and volumetric haze atmosphere.</p>
+                    </div>
+                </div>
+
+                <div class="cine-card pillar-card">
+                    <div>
+                        <div class="pillar-top">
+                            <div class="pillar-icon">📷</div>
+                            <span class="pillar-num">03</span>
+                        </div>
+                        <span class="pillar-tag">Still Photography</span>
+                        <h3 class="pillar-title">Exposure &amp; Bokeh</h3>
+                        <p class="pillar-desc">Prime optics, shallow depth of field (f/1.4 - f/2.8), street documentary
+                            portraits, and manual RAW color development.</p>
+                    </div>
+                </div>
+
+                <div class="cine-card pillar-card">
+                    <div>
+                        <div class="pillar-top">
+                            <div class="pillar-icon">✂</div>
+                            <span class="pillar-num">04</span>
+                        </div>
+                        <span class="pillar-tag">Post-Production</span>
+                        <h3 class="pillar-title">Editing &amp; Color</h3>
+                        <p class="pillar-desc">Timeline rhythm, cutting on action in Premiere Pro, S-Log3 flat raw
+                            correction, and custom Rec.709 film grading.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. ADVANCED INTERACTIVE 3-POINT LIGHTING & GAFFER LAB -->
+    <section id="lighting-lab" class="section-block" style="background: #090c13;">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">DOP Masterclass &bull; Virtual Studio</span>
+                <h2 class="section-title">Interactive Lighting Lab &amp; Floor Setup</h2>
+                <p class="section-desc">
+                    Cinematography is painting with light and shadow. Test real <strong>lighting patterns (Rembrandt,
+                        Split, Butterfly)</strong>, switch between the <strong>Camera Viewfinder</strong> and the
+                    <strong>Overhead Floor Diagram</strong>, and see why lighting sets the emotional tone of every
+                    scene.
+                </p>
+            </div>
+
+            <!-- View Switcher: Camera POV vs Overhead Set Floor Plan -->
+            <div style="display:flex; justify-content:center; gap:0.5rem; margin-bottom:1.5rem;">
+                <button id="viewBtnCamera" onclick="switchLabView('camera')" class="filter-btn active"
+                    style="font-weight:700;">
+                    🎥 Camera Viewfinder (Front POV)
+                </button>
+                <button id="viewBtnFloor" onclick="switchLabView('floor')" class="filter-btn">
+                    📐 Overhead Set Floor Plan (Gaffer View)
+                </button>
+            </div>
+
+            <div class="lighting-stage-grid">
+
+                <!-- VIEW 1: CAMERA VIEWPORT STAGE -->
+                <div class="cine-card viewport-container" id="stageContainerCamera">
+                    <div class="hud-bracket hud-tl"></div>
+                    <div class="hud-bracket hud-tr"></div>
+                    <div class="hud-bracket hud-bl"></div>
+                    <div class="hud-bracket hud-br"></div>
+
+                    <div class="lighting-viewport" id="cineViewport">
+                        <!-- Ambient Darkness & Room Glow -->
+                        <div class="light-layer" id="sim-ambient" style="opacity:1;"></div>
+
+                        <!-- Atmospheric Volumetric Haze -->
+                        <div class="light-layer" id="sim-haze" style="opacity:0.8;"></div>
+
+                        <!-- 3D Subject Silhouette & Shading Face -->
+                        <div class="subject-wrapper"
+                            style="position:relative; z-index:10; display:flex; flex-direction:column; align-items:center;">
+                            <div id="subjectSilhouette" class="subject-avatar"
+                                style="transition: all 0.3s ease; box-shadow: 0 0 25px rgba(0,0,0,0.9); font-size:2.2rem; width:84px; height:84px; position:relative;">
+                                👤
+                                <!-- Live Shadow Overlay Badge -->
+                                <div id="patternNameBadge"
+                                    style="position:absolute; bottom:-12px; font-family:var(--font-mono); font-size:0.58rem; background:rgba(0,0,0,0.85); color:var(--amber-cine); padding:1px 6px; border-radius:3px; border:1px solid rgba(245,158,11,0.4); white-space:nowrap;">
+                                    REMBRANDT
+                                </div>
+                            </div>
+                            <span
+                                style="font-family:var(--font-mono); font-size:0.65rem; color:var(--text-muted); margin-top:16px; background:rgba(0,0,0,0.6); padding:2px 8px; border-radius:4px; border:1px solid rgba(255,255,255,0.08);">
+                                Talent (Motivated Light Falloff)
+                            </span>
+                        </div>
+
+                        <!-- Key Light Beam (Angle 45 deg) -->
+                        <div class="light-layer" id="sim-key" style="opacity:1;"></div>
+
+                        <!-- Fill Light Soft Wash -->
+                        <div class="light-layer" id="sim-fill" style="opacity:0.7;"></div>
+
+                        <!-- Rim / Hair Edge Kicker Light -->
+                        <div class="light-layer" id="sim-rim" style="opacity:0.9;"></div>
+
+                        <!-- Live HUD Telemetry Strip -->
+                        <div class="viewport-hud">
+                            <div>RATIO: <strong id="hudRatio" style="color:var(--amber-cine)">4:1 Dramatic
+                                    Narrative</strong></div>
+                            <div>CCT: <strong id="hudCCT" style="color:var(--amber-warm)">3200K Tungsten</strong></div>
+                            <div>KEY: <strong id="hudKeyPower" style="color:#fff">85%</strong></div>
+                        </div>
+                    </div>
+
+                    <!-- Directorial Explainer Card (Under Viewport for Easy Understanding) -->
+                    <div
+                        style="margin-top:0.85rem; padding:0.85rem; background:rgba(0,0,0,0.4); border-radius:0.65rem; border:1px solid rgba(255,255,255,0.06); font-family:var(--font-mono); font-size:0.72rem; line-height:1.5;">
+                        <span style="color:var(--amber-cine); font-weight:700;">💡 Directorial Insight: </span>
+                        <span id="lightingInsightText" style="color:var(--text-muted);">
+                            Key light creates the primary character shape. Fill controls how deep the shadow side is,
+                            while the Rim light carves the actor's silhouette off dark backgrounds.
+                        </span>
+                    </div>
+                </div>
+
+                <!-- VIEW 2: OVERHEAD 2D FLOOR PLAN (Top-Down Diagram) -->
+                <div class="cine-card viewport-container" id="stageContainerFloor" style="display:none;">
+                    <div class="hud-bracket hud-tl"></div>
+                    <div class="hud-bracket hud-tr"></div>
+                    <div class="hud-bracket hud-bl"></div>
+                    <div class="hud-bracket hud-br"></div>
+
+                    <div class="lighting-viewport"
+                        style="background:#07090e; flex-direction:column; justify-content:space-between; padding:1.25rem;">
+                        <div
+                            style="width:100%; display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.65rem; color:var(--text-dim); border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:4px;">
+                            <span>TOP-DOWN GAFFER FLOOR MAP</span>
+                            <span style="color:var(--amber-cine);">GRID: 1M SCALE</span>
+                        </div>
+
+                        <!-- Floor Layout Schematic -->
+                        <div
+                            style="position:relative; width:100%; height:190px; display:flex; align-items:center; justify-content:center;">
+                            <!-- Top Wall / Background -->
+                            <div
+                                style="position:absolute; top:5px; left:10%; right:10%; height:2px; background:rgba(255,255,255,0.15); border-style:dashed;">
+                            </div>
+
+                            <!-- Rim Light Fixture (Back right behind subject) -->
+                            <div id="floorRimLight"
+                                style="position:absolute; top:18px; right:20%; font-family:var(--font-mono); font-size:0.62rem; color:var(--cyan-cine); display:flex; align-items:center; gap:4px; transition:opacity 0.2s;">
+                                <span>💡 Rim Kicker (6500K)</span>
+                                <span style="font-size:0.9rem;">↘</span>
+                            </div>
+
+                            <!-- Subject Center Circle -->
+                            <div
+                                style="width:50px; height:50px; border-radius:50%; background:#1b212f; border:2px solid var(--amber-cine); display:flex; align-items:center; justify-content:center; color:#fff; font-size:0.75rem; font-weight:700; z-index:5; box-shadow:0 0 15px rgba(245,158,11,0.25);">
+                                TALENT
+                            </div>
+
+                            <!-- Key Light Fixture (Front Left at 45°) -->
+                            <div id="floorKeyLight"
+                                style="position:absolute; bottom:30px; left:12%; font-family:var(--font-mono); font-size:0.62rem; color:var(--amber-warm); display:flex; align-items:center; gap:4px; transition:opacity 0.2s;">
+                                <span style="font-size:0.9rem;">↗</span>
+                                <span>💡 300W Key (45° Octa)</span>
+                            </div>
+
+                            <!-- Fill Board (Front Right) -->
+                            <div id="floorFillLight"
+                                style="position:absolute; bottom:30px; right:12%; font-family:var(--font-mono); font-size:0.62rem; color:#93c5fd; display:flex; align-items:center; gap:4px; transition:opacity 0.2s;">
+                                <span>◻ 5-in-1 Fill Bounce</span>
+                                <span style="font-size:0.9rem;">↖</span>
+                            </div>
+
+                            <!-- Camera Center Front -->
+                            <div
+                                style="position:absolute; bottom:5px; font-family:var(--font-mono); font-size:0.65rem; color:#fff; background:#111522; padding:3px 10px; border-radius:4px; border:1px solid rgba(255,255,255,0.2);">
+                                🎥 A-CAM (50mm Prime &bull; 24 FPS)
+                            </div>
+                        </div>
+
+                        <div
+                            style="width:100%; font-family:var(--font-mono); font-size:0.65rem; color:var(--text-muted); text-align:center;">
+                            Key 45° off-axis | Fill on shadow side | Rim 135° backlight kicker
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTROLS & PHYSICAL GAFFER CONSOLE -->
+                <div class="cine-card controls-card">
+                    <div
+                        style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:0.5rem;">
+                        <span
+                            style="font-family:var(--font-mono); font-size:0.75rem; color:#fff; font-weight:700; text-transform:uppercase;">
+                            Gaffer Controls &amp; Patterns
+                        </span>
+                        <span style="font-family:var(--font-mono); font-size:0.65rem; color:#10b981; font-weight:700;">
+                            ● Live Console
+                        </span>
+                    </div>
+
+                    <!-- 1. Famous Lighting Patterns (Easy for anyone to learn & understand!) -->
+                    <div style="margin-bottom:0.85rem;">
+                        <div
+                            style="font-family:var(--font-mono); font-size:0.68rem; color:var(--amber-cine); text-transform:uppercase; margin-bottom:0.4rem; font-weight:700;">
+                            1. Facial Shadow Pattern:
+                        </div>
+                        <div
+                            style="display:grid; grid-template-columns:repeat(2, 1fr); gap:0.4rem; font-family:var(--font-mono); font-size:0.65rem;">
+                            <button onclick="setFacePattern('rembrandt')" id="btnPatRembrandt" class="filter-btn active"
+                                style="padding:0.35rem;">Rembrandt (45° Triangle)</button>
+                            <button onclick="setFacePattern('split')" id="btnPatSplit" class="filter-btn"
+                                style="padding:0.35rem;">Split (90° Noir Half)</button>
+                            <button onclick="setFacePattern('butterfly')" id="btnPatButterfly" class="filter-btn"
+                                style="padding:0.35rem;">Butterfly (Beauty Top)</button>
+                            <button onclick="setFacePattern('rim')" id="btnPatRim" class="filter-btn"
+                                style="padding:0.35rem;">Backlit Silhouette</button>
+                        </div>
+                    </div>
+
+                    <!-- 2. Individual Fixture Switches -->
+                    <div
+                        style="font-family:var(--font-mono); font-size:0.68rem; color:var(--text-dim); text-transform:uppercase; margin-bottom:0.35rem; font-weight:700;">
+                        2. Fixture Toggles &amp; Dimmer:
+                    </div>
+
+                    <!-- Key Light -->
+                    <div class="control-row">
+                        <div class="control-info" style="width:100%; margin-right:8px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <span class="control-name"><span style="color:var(--amber-cine);">●</span> Key Light
+                                    (Main Shape)</span>
+                                <button id="btn-key" onclick="toggleLight('key')" class="btn-toggle on">ON</button>
+                            </div>
+                            <div style="margin-top:6px; display:flex; align-items:center; gap:6px;">
+                                <span
+                                    style="font-family:var(--font-mono); font-size:0.6rem; color:var(--text-dim);">DIM</span>
+                                <input type="range" id="sliderKeyPower" min="10" max="100" value="85"
+                                    style="width:100%; accent-color:var(--amber-cine); height:3px;"
+                                    oninput="updateGafferConsole()" aria-label="Key Light Dimmer">
+                                <span id="labelKeyPower"
+                                    style="font-family:var(--font-mono); font-size:0.6rem; color:#fff;">85%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Color Temperature CCT -->
+                    <div class="control-row" style="flex-direction:column; align-items:stretch; gap:6px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span class="control-name" style="font-size:0.75rem;">🌡️ Color Temperature (CCT)</span>
+                            <span id="labelCCT"
+                                style="font-family:var(--font-mono); font-size:0.7rem; color:var(--amber-warm); font-weight:700;">3200K
+                                Tungsten Warm</span>
+                        </div>
+                        <input type="range" id="sliderCCT" min="3200" max="5600" step="100" value="3200"
+                            style="width:100%; accent-color:var(--amber-warm); height:4px;"
+                            oninput="updateGafferConsole()" aria-label="Color Temperature">
+                        <div
+                            style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.58rem; color:var(--text-dim);">
+                            <span>3200K Warm Tungsten</span>
+                            <span>4300K Neutral</span>
+                            <span>5600K Cool Daylight</span>
+                        </div>
+                    </div>
+
+                    <!-- Fill Light -->
+                    <div class="control-row">
+                        <div class="control-info">
+                            <span class="control-name"><span style="color:#93c5fd;">●</span> Fill Reflector /
+                                Bounce</span>
+                            <span class="control-desc">Lifts shadow side of character face</span>
+                        </div>
+                        <button id="btn-fill" onclick="toggleLight('fill')" class="btn-toggle on">ON</button>
+                    </div>
+
+                    <!-- Rim Light -->
+                    <div class="control-row">
+                        <div class="control-info">
+                            <span class="control-name"><span style="color:var(--cyan-cine);">●</span> Rim / Hair
+                                Kicker</span>
+                            <span class="control-desc">Silhouettes hair &amp; shoulders from backdrop</span>
+                        </div>
+                        <button id="btn-rim" onclick="toggleLight('rim')" class="btn-toggle on">ON</button>
+                    </div>
+
+                    <!-- Haze -->
+                    <div class="control-row">
+                        <div class="control-info">
+                            <span class="control-name"><span style="color:#c084fc;">●</span> Atmospheric Haze</span>
+                            <span class="control-desc">Volumetric depth &amp; beam scattering</span>
+                        </div>
+                        <button id="btn-haze" onclick="toggleLight('haze')" class="btn-toggle on">ON</button>
+                    </div>
+
+                    <!-- Directorial Presets -->
+                    <div
+                        style="margin-top:0.85rem; padding-top:0.65rem; border-top:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center; font-family:var(--font-mono); font-size:0.65rem;">
+                        <span style="color:var(--text-dim);">DIRECTOR PRESETS:</span>
+                        <span onclick="setLightingPreset('noir')" style="color:var(--amber-cine); cursor:pointer;">Noir
+                            8:1</span>
+                        <span onclick="setLightingPreset('golden')"
+                            style="color:var(--amber-warm); cursor:pointer;">Golden 3:1</span>
+                        <span onclick="setLightingPreset('commercial')" style="color:#10b981; cursor:pointer;">High-Key
+                            2:1</span>
+                        <span onclick="setLightingPreset('all')"
+                            style="color:#fff; cursor:pointer; text-decoration:underline;">Reset</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. BEFORE / AFTER COLOR GRADING SLIDER -->
+    <section id="grading-slider" class="section-block">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Color Finishing</span>
+                <h2 class="section-title">Raw Log vs Final Rec.709</h2>
+                <p class="section-desc">Drag the interactive slider to compare flat S-Log3 raw footage with the color
+                    graded master look.</p>
+            </div>
+
+            <div class="cine-card slider-wrapper">
+                <div class="hud-bracket hud-tl"></div>
+                <div class="hud-bracket hud-tr"></div>
+                <div class="hud-bracket hud-bl"></div>
+                <div class="hud-bracket hud-br"></div>
+
+                <div class="split-view" id="splitCanvas">
+                    <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1200&q=80"
+                        alt="Final Color Graded">
+
+                    <div class="raw-clip" id="rawClip">
+                        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1200&q=80"
+                            alt="Raw Log">
+                    </div>
+
+                    <span class="tag-badge raw">S-LOG3 FLAT RAW</span>
+                    <span class="tag-badge graded">FINAL REC.709 GRADE</span>
+
+                    <div class="handle-line" id="handleLine">
+                        <div class="handle-circle">↔</div>
+                    </div>
+                </div>
+
+                <input type="range" min="0" max="100" value="50" class="range-slider-bar" id="rangeInput"
+                    aria-label="Comparison slider">
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. SELECTED PROJECTS & CATEGORY BREAKDOWN -->
+    <section id="portfolio" class="section-block" style="background:#080a0f;">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Portfolio Showcase</span>
+                <h2 class="section-title">Selected Projects &amp; Work Types</h2>
+                <p class="section-desc">
+                    Browse my body of work organized by specialized craft and formats—from <strong>Narrative
+                        Films</strong> and <strong>Music Videos</strong> to <strong>Street Portraits</strong> and
+                    <strong>Color Grading</strong>.
+                </p>
+            </div>
+
+            <!-- TIER 1: MAIN CRAFT TABS -->
+            <div class="filter-row" style="margin-bottom: 0.85rem;">
+                <button onclick="setMainCraft('all')" class="filter-btn active main-craft-btn" data-craft="all">All
+                    Works (12)</button>
+                <button onclick="setMainCraft('cinematography')" class="filter-btn main-craft-btn"
+                    data-craft="cinematography">🎥 Cinematography (4)</button>
+                <button onclick="setMainCraft('photography')" class="filter-btn main-craft-btn"
+                    data-craft="photography">📷 Photography (4)</button>
+                <button onclick="setMainCraft('editing')" class="filter-btn main-craft-btn" data-craft="editing">✂ Video
+                    Editing &amp; Color (4)</button>
+            </div>
+
+            <!-- TIER 2: SPECIALTY SUB-CATEGORY CHIPS -->
+            <div id="subCategoryRow"
+                style="display:flex; flex-wrap:wrap; justify-content:center; gap:0.4rem; margin-bottom:2rem;">
+                <!-- Dynamically hydrated via JS or defaults -->
+                <button onclick="filterBySubtype('all')" class="filter-btn active subtype-btn" data-sub="all"
+                    style="font-size:0.68rem; padding:0.3rem 0.7rem; border-color:rgba(245,158,11,0.4);">
+                    All Specializations
+                </button>
+            </div>
+
+            <!-- PORTFOLIO GRID (12 Specialized Projects across all types) -->
+            <div class="portfolio-grid" id="portfolioGrid">
+
+                <!-- CINEMATOGRAPHY 1: Narrative Short Film -->
+                <div class="project-card" data-craft="cinematography" data-sub="narrative"
+                    onclick="openDetail('Midnight Alleyway Chase', 'Cinematography &bull; Narrative Short', 'Director of Photography', 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80', 'A low-key nocturnal thriller shot in wet street conditions. High-contrast motivated backlight from shop neon and handheld shoulder-rig pacing.')">
+                    <div class="project-img-box">
+                        <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80"
+                            alt="Narrative Short Film">
+                        <span class="project-cat-pill">Narrative &bull; Short Film</span>
+                    </div>
+                    <div class="project-body">
+                        <div
+                            style="font-family:var(--font-mono); font-size:0.65rem; color:var(--amber-cine); margin-bottom:2px;">
+                            CINEMATOGRAPHY &bull; NARRATIVE</div>
+                        <h3 class="project-title">Midnight Alleyway Chase</h3>
+                        <p class="project-desc">8:1 Chiaroscuro street lighting with motivated sodium lamps and fluid
+                            camera tracking.</p>
+                    </div>
+                </div>
+
+                <!-- CINEMATOGRAPHY 2: Music Video & Creative -->
+                <div class="project-card" data-craft="cinematography" data-sub="music-video"
+                    onclick="openDetail('Cyber Neon Music Video', 'Cinematography &bull; Music Video', 'DoP & Lighting Cameraman', 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80', 'Stylized performance shoot using RGB tube lighting, fast focal tracking, and 2.39:1 anamorphic framing for music artist visualizer.')">
+                    <div class="project-img-box">
+                        <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80"
+                            alt="Music Video Shoot">
+                        <span class="project-cat-pill">Music Video &bull; Stylized</span>
+                    </div>
+                    <div class="project-body">
+                        <div
+                            style="font-family:var(--font-mono); font-size:0.65rem; color:var(--amber-cine); margin-bottom:2px;">
+                            CINEMATOGRAPHY &bull; MUSIC VIDEO</div>
+                        <h3 class="project-title">Cyber Neon Performance</h3>
+                        <p class="project-desc">RGB color saturation, energetic gimbal push-ins, and anamorphic lens
+                            flares.</p>
+                    </div>
+                </div>
+
+                <!-- CINEMATOGRAPHY 3: Commercial & Brand Ad -->
+                <div class="project-card" data-craft="cinematography" data-sub="commercial"
+                    onclick="openDetail('Artisan Coffee Commercial Ad', 'Cinematography &bull; Commercial Ad', 'Cinematographer', 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80', 'High production value brand commercial featuring macro pour shots, slow-motion 60 FPS steam diffusion, and soft 2:1 commercial lighting.')">
+                    <div class="project-img-box">
+                        <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80"
+                            alt="Brand Commercial">
+                        <span class="project-cat-pill">Commercial &bull; Brand Ad</span>
+                    </div>
+                    <div class="project-body">
+                        <div
+                            style="font-family:var(--font-mono); font-size:0.65rem; color:var(--amber-cine); margin-bottom:2px;">
+                            CINEMATOGRAPHY &bull; BRAND AD</div>
+                        <h3 class="project-title">Artisan Brand Commercial</h3>
+                        <p class="project-desc">Macro focus pulls, slow-motion steam capture, and soft window light
+                            simulation.</p>
+                    </div>
+                </div>
+
+                <!-- CINEMATOGRAPHY 4: Documentary & Interviews -->
+                <div class="project-card" data-craft="cinematography" data-sub="documentary"
+                    onclick="openDetail('Old Delhi Craftsmen Documentary', 'Cinematography &bull; Documentary', 'Documentary Cameraman', 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80', 'Naturalistic fly-on-the-wall observational filming capturing traditional silver and book craftsmen at work in historic quarters.')">
+                    <div class="project-img-box">
+                        <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80"
+                            alt="Documentary Shoot">
+                        <span class="project-cat-pill">Documentary &bull; Interview</span>
+                    </div>
+                    <div class="project-body">
+                        <div
+                            style="font-family:var(--font-mono); font-size:0.65rem; color:var(--amber-cine); margin-bottom:2px;">
+                            CINEMATOGRAPHY &bull; DOCUMENTARY</div>
+                        <h3 class="project-title">Old Delhi Heritage Craftsmen</h3>
+                        <p class="project-desc">Handheld observational single-takes balancing available sunlight with
+                            portable fill.</p>
+                    </div>
+                </div>
+
+                <!-- PHOTOGRAPHY 1: Portrait & Editorial -->
+                <div class="project-card" data-craft="photography" data-sub="portrait"
+                    onclick="openDetail('Golden Hour Fashion Editorial', 'Photography &bull; Portrait & Editorial', 'Portrait Photographer', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80', 'Outdoor golden hour editorial portraits balancing natural sun edge backlight with subtle circular reflector bounce for deep catchlights.')">
+                    <div class="project-img-box">
+                        <img src="https://drive.google.com/file/d/1u71Gny4WaaiZnUsfN_wL7quzvOxuDuUB/view?usp=sharing"
+                            alt="Portrait Photography">
+                        <span class="project-cat-pill">Portrait &bull; Editorial</span>
+                    </div>
+                    <div class="project-body">
+                        <div
+                            style="font-family:var(--font-mono); font-size:0.65rem; color:var(--cyan-cine); margin-bottom:2px;">
+                            PHOTOGRAPHY &bull; PORTRAIT</div>
+                        <h3 class="project-title">Golden Hour Editorial</h3>
+                        <p class="project-desc">85mm f/1.4 prime lens with creamy subject bokeh and glowing rim
+                            highlights.</p>
+                    </div>
+                </div>
+
+                <!-- PHOTOGRAPHY 2: Street & Cultural Candid -->
+                <div class="project-card" data-craft="photography" data-sub="street"
+                    onclick="openDetail('Chawri Bazar Monochrome Study', 'Photography &bull; Street & Candid', 'Street Photographer', 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=1200&q=80', 'High contrast monochrome street portraits capturing shafts of morning sunlight through Old Delhi market alleys.')">
+                    <div class="project-img-box">
+                        <img src="https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=800&q=80"
+                            alt="Street Photography">
+                        <span class="project-cat-pill">Street &bull; Candid B&amp;W</span>
+                    </div>
+                    <div class="project-body">
+                        <div
+                            style="font-family:var(--font-mono); font-size:0.65rem; color:var(--cyan-cine); margin-bottom:2px;">
+                            PHOTOGRAPHY &bull; STREET</div>
+                        <h3 class="project-title">Chawri Bazar Monochrome</h3>
+                        <p class="project-desc">Hard daylight shafts, deep textural shadows, and unposed human
+                            expressions.</p>
+                    </div>
+                </div>
+
+                <!-- PHOTOGRAPHY 3: Architecture & Heritage -->
+                <div class="project-card" data-craft="photography" data-sub="architecture"
+                    onclick="openDetail('Safdarjung Tomb Blue Hour', 'Photography &bull; Architecture & Heritage', 'Architectural Photographer', 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1200&q=80', 'Symmetrical visual framing of Mughal stonework during twilight blue hour, preserving highlight detail in dome carvings.')">
+                    <div class="project-img-box">
+                        <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=800&q=80"
+                            alt="Architecture Photography">
+                        <span class="project-cat-pill">Architecture &bull; Heritage</span>
+                    </div>
+                    <div class="project-body">
+                        <div
+                            style="font-family:var(--font-mono); font-size:0.65rem; color:var(--cyan-cine); margin-bottom:2px;">
+                            PHOTOGRAPHY &bull; ARCHITECTURE</div>
+                        <h3 class="project-title">Safdarjung Tomb Blue Hour</h3>
+                        <p class="project-desc">16mm ultra-wide perspective with pinpoint line convergence and dynamic
+                            range.</p>
+                    </div>
+                </div>
+
+                <!-- PHOTOGRAPHY 4: Product & Macro Stills -->
+                <div class="project-card" data-craft="photography" data-sub="product"
+                    onclick="openDetail('Studio Product Still Life', 'Photography &bull; Product & Macro', 'Still Photographer', 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80', 'Controlled studio tabletop photography showcasing glass reflections, brushed metal textures, and graduated softbox lighting.')">
+                    <div class="project-img-box">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80"
+                            alt="Product Photography">
+                        <span class="project-cat-pill">Product &bull; Tabletop</span>
+                    </div>
+                    <div class="project-body">
+                        <div
+                            style="font-family:var(--font-mono); font-size:0.65rem; color:var(--cyan-cine); margin-bottom:2px;">
+                            PHOTOGRAPHY &bull; PRODUCT</div>
+                        <h3 class="project-title">Studio Product Still Life</h3>
+                        <p class="project-desc">Polarized lighting control, razor-sharp edge gradients, and pristine
+                            macro focus.</p>
+                    </div>
+                </div>
+
+                <!-- VIDEO EDITING 1: Color Grading & Film Look -->
+                <div class="project-card" data-craft="editing" data-sub="color-grading"
+                    onclick="openDetail('S-Log3 to Film Emulation Grade', 'Video Editing &bull; Color Grading', 'Colorist', 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1200&q=80', 'Transforming flat, low-contrast S-Log3 raw camera footage into rich cinematic Rec.709 with custom split-toning and skin tone protection.')">
+                    <div class="project-img-box">
+                        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=800&q=80"
+                            alt="Color Grading">
+                        <span class="project-cat-pill">Color Grading &bull; Rec.709</span>
+                    </div>
+                    <div class="project-body">
+                        <div style="font-family:var(--font-mono); font-size:0.65rem; color:#10b981; margin-bottom:2px;">
+                            VIDEO EDITING &bull; COLOR GRADE</div>
+                        <h3 class="project-title">S-Log3 Film Emulation</h3>
+                        <p class="project-desc">Primary exposure balancing, DaVinci Resolve color transforms, and grain
+                            emulation.</p>
+                    </div>
+                </div>
+
+                <!-- VIDEO EDITING 2: Music Video & Beat Sync -->
+                <div class="project-card" data-craft="editing" data-sub="music-edit"
+                    onclick="openDetail('High-Octane Music Video Edit', 'Video Editing &bull; Music Video Cuts', 'Lead Editor', 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80', 'Aggressive multi-cam rhythm cutting synced to drum transient stems, speed ramps, whip pans, and glitch transitions.')">
+                    <div class="project-img-box">
+                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80"
+                            alt="Music Video Editing">
+                        <span class="project-cat-pill">Music Video &bull; Beat Cuts</span>
+                    </div>
+                    <div class="project-body">
+                        <div style="font-family:var(--font-mono); font-size:0.65rem; color:#10b981; margin-bottom:2px;">
+                            VIDEO EDITING &bull; MUSIC VIDEO</div>
+                        <h3 class="project-title">High-Octane Beat Sync Cut</h3>
+                        <p class="project-desc">Dynamic speed-ramping, rhythmic cut timing, and synchronized visual
+                            impacts.</p>
+                    </div>
+                </div>
+
+                <!-- VIDEO EDITING 3: Commercial & Social Ads -->
+                <div class="project-card" data-craft="editing" data-sub="commercial-edit"
+                    onclick="openDetail('30s Commercial Teaser &amp; Reels', 'Video Editing &bull; Commercial Ads', 'Commercial Editor', 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=80', 'Fast-paced, hook-driven 30-second brand spot optimized for Instagram Reels and YouTube Ads with punchy sound design and captions.')">
+                    <div class="project-img-box">
+                        <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80"
+                            alt="Commercial Edit">
+                        <span class="project-cat-pill">Commercial &bull; Social Ads</span>
+                    </div>
+                    <div class="project-body">
+                        <div style="font-family:var(--font-mono); font-size:0.65rem; color:#10b981; margin-bottom:2px;">
+                            VIDEO EDITING &bull; COMMERCIAL</div>
+                        <h3 class="project-title">30s High-Hook Brand Spot</h3>
+                        <p class="project-desc">Sound design layering (SFX), clean typography overlays, and snappy
+                            retention pacing.</p>
+                    </div>
+                </div>
+
+                <!-- VIDEO EDITING 4: Narrative & Dialogue Continuity -->
+                <div class="project-card" data-craft="editing" data-sub="narrative-edit"
+                    onclick="openDetail('Dramatic Scene Dialogue Cut', 'Video Editing &bull; Narrative Pacing', 'Editor', 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80', 'Subtle narrative editing focusing on emotional pauses, cut on action eye-traces, and J/L cut audio transitions between characters.')">
+                    <div class="project-img-box">
+                        <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80"
+                            alt="Narrative Editing">
+                        <span class="project-cat-pill">Narrative &bull; Dialogue Cut</span>
+                    </div>
+                    <div class="project-body">
+                        <div style="font-family:var(--font-mono); font-size:0.65rem; color:#10b981; margin-bottom:2px;">
+                            VIDEO EDITING &bull; NARRATIVE</div>
+                        <h3 class="project-title">Dialogue Continuity Cut</h3>
+                        <p class="project-desc">Seamless cut-on-action transitions, reaction shot timing, and audio
+                            L-cuts.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. ON-SET BTS -->
+    <section id="bts" class="section-block">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Discipline</span>
+                <h2 class="section-title">Behind The Scenes</h2>
+                <p class="section-desc">On-set camera rigging, light modification, and director collaboration.</p>
+            </div>
+
+            <div class="bts-grid">
+                <div class="bts-card">
+                    <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=600&q=80"
+                        alt="BTS">
+                    <div class="bts-info">
+                        <h4 style="font-size:0.9rem; color:#fff; font-weight:700;">Rigging Continuous COB</h4>
+                        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.25rem;">Softbox angle
+                            placement for contrast.</p>
+                    </div>
+                </div>
+                <div class="bts-card">
+                    <img src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?auto=format&fit=crop&w=600&q=80"
+                        alt="BTS">
+                    <div class="bts-info">
+                        <h4 style="font-size:0.9rem; color:#fff; font-weight:700;">Fluid Head Tracking</h4>
+                        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.25rem;">Operating smooth pans
+                            on tripod.</p>
+                    </div>
+                </div>
+                <div class="bts-card">
+                    <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=600&q=80"
+                        alt="BTS">
+                    <div class="bts-info">
+                        <h4 style="font-size:0.9rem; color:#fff; font-weight:700;">Waveform Exposure</h4>
+                        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.25rem;">False-color
+                            monitoring on field monitor.</p>
+                    </div>
+                </div>
+                <div class="bts-card">
+                    <img src="https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=600&q=80"
+                        alt="BTS">
+                    <div class="bts-info">
+                        <h4 style="font-size:0.9rem; color:#fff; font-weight:700;">Timeline Editing</h4>
+                        <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.25rem;">Premiere Pro pacing
+                            and sound sync.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. GEAR LOCKER -->
+    <section id="gear" class="section-block" style="background:#090b10;">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Production Kit</span>
+                <h2 class="section-title">Gear Locker</h2>
+            </div>
+
+            <div class="gear-grid">
+                <div class="gear-card">
+                    <div class="gear-title">🎥 Cameras &amp; Rigs</div>
+                    <ul class="gear-list">
+                        <li>Cinema Camera System</li>
+                        <li>Pro Camcorder Setup</li>
+                        <li>Tripod with Fluid Head</li>
+                        <li>Shoulder Rig &amp; Grips</li>
+                    </ul>
+                </div>
+                <div class="gear-card">
+                    <div class="gear-title">🔍 Lenses &amp; Optics</div>
+                    <ul class="gear-list">
+                        <li>Fast Prime Optics (f/1.4 - f/1.8)</li>
+                        <li>Wide-Angle Zoom Lens</li>
+                        <li>85mm Compression Lens</li>
+                        <li>Variable ND Filters</li>
+                    </ul>
+                </div>
+                <div class="gear-card">
+                    <div class="gear-title">💡 Lights &amp; Modifiers</div>
+                    <ul class="gear-list">
+                        <li>Continuous COB Studio Lights</li>
+                        <li>Bowens Octabox &amp; Grids</li>
+                        <li>5-in-1 Reflectors &amp; Scrims</li>
+                        <li>C-Stands &amp; Boom Arms</li>
+                    </ul>
+                </div>
+                <div class="gear-card">
+                    <div class="gear-title">💻 Post Suite</div>
+                    <ul class="gear-list">
+                        <li>Adobe Premiere Pro CC</li>
+                        <li>DaVinci Resolve Pipeline</li>
+                        <li>Wireless Lavalier Audio</li>
+                        <li>Calibrated IPS Monitor</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. DEDICATED SOCIAL MEDIA & NETWORK CHANNELS -->
+    <section id="social-channels" class="section-block">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Direct Network</span>
+                <h2 class="section-title">Connect &amp; Follow Works</h2>
+                <p class="section-desc">Get in touch for script readings, creative collaborations, or to view raw BTS
+                    footage and film stills across all platforms.</p>
+            </div>
+
+            <div class="social-channels-grid">
+                <!-- Native WhatsApp URL (Zero JS needed) -->
+                <a href="https://wa.me/919876543210?text=Hi%20Satish,%20I%20saw%20your%20cinematic%20portfolio%20and%20want%20to%20discuss%20a%20shoot."
+                    target="_blank" class="social-link-card">
+                    <div class="social-icon-circle icon-wa">💬</div>
+                    <div class="social-info">
+                        <h4>WhatsApp Direct</h4>
+                        <p>Instant Project Chat &bull; +91 9354650624</p>
+                    </div>
+                </a>
+
+                <a href="https://instagram.com" target="_blank" class="social-link-card">
+                    <div class="social-icon-circle icon-insta">📸</div>
+                    <div class="social-info">
+                        <h4>Instagram Reel</h4>
+                        <p>@satish_vision &bull; Stills &amp; BTS</p>
+                    </div>
+                </a>
+
+                <a href="https://youtube.com" target="_blank" class="social-link-card">
+                    <div class="social-icon-circle icon-yt">▶</div>
+                    <div class="social-info">
+                        <h4>YouTube Channel</h4>
+                        <p>SATISH VISION &bull; 4K Showreels</p>
+                    </div>
+                </a>
+
+                <a href="https://linkedin.com" target="_blank" class="social-link-card">
+                    <div class="social-icon-circle icon-li">in</div>
+                    <div class="social-info">
+                        <h4>LinkedIn Profile</h4>
+                        <p>Satish &bull; Cinematographer / DoP</p>
+                    </div>
+                </a>
+
+                <a href="mailto:contact@satishvision.com" class="social-link-card">
+                    <div class="social-icon-circle icon-mail">✉</div>
+                    <div class="social-info">
+                        <h4>Official Email</h4>
+                        <p>contact@satishvision.com</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. BOOK SHOOT (DIRECT WHATSAPP BRIEF BUILDER) -->
+    <section id="contact" class="section-block" style="background:#090b10;">
+        <div class="container">
+            <div class="cine-card contact-box">
+                <div class="hud-bracket hud-tl"></div>
+                <div class="hud-bracket hud-tr"></div>
+                <div class="hud-bracket hud-bl"></div>
+                <div class="hud-bracket hud-br"></div>
+
+                <div class="section-header" style="margin-bottom:1.5rem;">
+                    <span class="section-tag">Instant WhatsApp Booking</span>
+                    <h2 class="section-title">Book A Shoot Direct</h2>
+                    <p class="section-desc">Fill in the details below. Clicking the button will automatically compile
+                        your shoot brief and open WhatsApp directly.</p>
+                </div>
+
+                <form onsubmit="sendWhatsAppBrief(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Name / Production House *</label>
+                            <input type="text" id="clientName" required placeholder="e.g. Rahul Sharma"
+                                class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Shoot Type *</label>
+                            <select id="shootType" class="form-select">
+                                <option value="Short Film / Narrative">Short Film / Narrative</option>
+                                <option value="Music Video">Music Video</option>
+                                <option value="Brand Ad / Commercial">Brand Ad / Commercial</option>
+                                <option value="Fashion / Portrait Shoot">Fashion / Portrait Shoot</option>
+                                <option value="Editing & Color Work">Editing &amp; Color Work</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Role Needed *</label>
+                            <select id="hireRole" class="form-select">
+                                <option value="DoP (Cinematography + Lighting)">DoP (Cinematography + Lighting)</option>
+                                <option value="Camera Operator Only">Camera Operator Only</option>
+                                <option value="Full Shoot + Timeline Edit">Full Shoot + Timeline Edit</option>
+                                <option value="Colorist & Video Editor">Colorist &amp; Video Editor</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Location / Approximate Date</label>
+                            <input type="text" id="shootDate" placeholder="e.g. Delhi NCR / Next Week"
+                                class="form-input">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Project Vision / Notes</label>
+                        <textarea id="shootNotes" rows="3"
+                            placeholder="Lighting mood, camera references, or script idea..."
+                            class="form-textarea"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-whatsapp-submit">
+                        <span>💬</span> Transmit Brief to WhatsApp Directly
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <a href="https://wa.me/919876543210?text=Hi%20Satish,%20I%20saw%20your%20cinematic%20portfolio%20and%20want%20to%20discuss%20a%20shoot."
+        target="_blank" class="floating-whatsapp-btn" title="Chat on WhatsApp" aria-label="WhatsApp">
+        💬
+    </a>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container">
+            <div style="color:#fff; font-weight:700; margin-bottom:0.25rem;">SATISH_VISION &bull; Motivated Visual
+                Storytelling</div>
+            <div>&copy; 2026 Satish. All rights reserved. Open for Film &amp; Commercial Shoots.</div>
+        </div>
+    </footer>
+
+    <!-- MODAL: SHOWREEL (:target BASED) -->
+    <div id="showreelModal" class="modal-overlay">
+        <div class="modal-box">
+            <a href="#" class="modal-close-btn">✕</a>
+            <div style="position:relative; aspect-ratio:16/9; background:#000; border-radius:0.5rem; overflow:hidden;">
+                <iframe style="width:100%; height:100%; border:none;"
+                    src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1"
+                    allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: PROJECT DETAIL -->
+    <div id="detailModal" class="modal-overlay">
+        <div class="modal-box">
+            <a href="#" class="modal-close-btn" onclick="closeDetail()">✕</a>
+            <div style="aspect-ratio:16/9; border-radius:0.5rem; overflow:hidden; margin-bottom:1rem; background:#000;">
+                <img id="detailImg" src="" style="width:100%; height:100%; object-fit:cover;" alt="Detail">
+            </div>
+            <span id="detailCat"
+                style="font-family:var(--font-mono); font-size:0.7rem; color:var(--amber-cine); text-transform:uppercase; font-weight:700;"></span>
+            <h3 id="detailTitle" style="font-size:1.3rem; color:#fff; font-weight:800; margin:0.3rem 0;"></h3>
+            <p id="detailDesc" style="font-size:0.85rem; color:var(--text-muted); line-height:1.6;"></p>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT: ENHANCED INTERACTIVITY & TWO-TIER FILTERING -->
+    <script>
+        const MY_WHATSAPP = "919876543210";
+
+        // ==========================================
+        // 1. LIGHTING LAB GAFFER CONSOLE & PATTERNS
+        // ==========================================
+        const lightState = { key: true, fill: true, rim: true, haze: true };
+        let currentPattern = "rembrandt";
+
+        function switchLabView(view) {
+            const cameraStage = document.getElementById('stageContainerCamera');
+            const floorStage = document.getElementById('stageContainerFloor');
+            const btnCamera = document.getElementById('viewBtnCamera');
+            const btnFloor = document.getElementById('viewBtnFloor');
+
+            if (view === 'camera') {
+                cameraStage.style.display = 'block';
+                floorStage.style.display = 'none';
+                btnCamera.classList.add('active');
+                btnFloor.classList.remove('active');
+            } else {
+                cameraStage.style.display = 'none';
+                floorStage.style.display = 'block';
+                btnFloor.classList.add('active');
+                btnCamera.classList.remove('active');
+            }
+        }
+
+        function setFacePattern(pat) {
+            currentPattern = pat;
+            const keySlider = document.getElementById('sliderKeyPower');
+            const cctSlider = document.getElementById('sliderCCT');
+            const badge = document.getElementById('patternNameBadge');
+            const insight = document.getElementById('lightingInsightText');
+
+            // Update Pattern Buttons State
+            ['Rembrandt', 'Split', 'Butterfly', 'Rim'].forEach(name => {
+                const b = document.getElementById('btnPat' + name);
+                if (b) b.classList.remove('active');
+            });
+
+            if (pat === 'rembrandt') {
+                document.getElementById('btnPatRembrandt').classList.add('active');
+                lightState.key = true; lightState.fill = true; lightState.rim = true; lightState.haze = true;
+                if (keySlider) keySlider.value = 85;
+                if (cctSlider) cctSlider.value = 3200;
+                if (badge) badge.textContent = "REMBRANDT (45° TRIANGLE)";
+                if (insight) insight.textContent = "Rembrandt Lighting: Key light at 45° creates a small triangle of light on the shadow cheek. The most respected cinematic pattern for dramatic narrative depth.";
+            } else if (pat === 'split') {
+                document.getElementById('btnPatSplit').classList.add('active');
+                lightState.key = true; lightState.fill = false; lightState.rim = true; lightState.haze = true;
+                if (keySlider) keySlider.value = 100;
+                if (cctSlider) cctSlider.value = 4000;
+                if (badge) badge.textContent = "SPLIT (90° NOIR HALF)";
+                if (insight) insight.textContent = "Split Lighting: Key placed directly 90° at the side with zero fill. Carves the face exactly in half—one side bright, one in pitch shadow. Used for villains, internal conflict, and mystery.";
+            } else if (pat === 'butterfly') {
+                document.getElementById('btnPatButterfly').classList.add('active');
+                lightState.key = true; lightState.fill = true; lightState.rim = true; lightState.haze = false;
+                if (keySlider) keySlider.value = 90;
+                if (cctSlider) cctSlider.value = 5000;
+                if (badge) badge.textContent = "BUTTERFLY (BEAUTY TOP)";
+                if (insight) insight.textContent = "Butterfly (Paramount) Lighting: High top key casting a small symmetrical butterfly shadow beneath the nose. Accentuates cheekbones, perfect for fashion editorials and glamour.";
+            } else if (pat === 'rim') {
+                document.getElementById('btnPatRim').classList.add('active');
+                lightState.key = false; lightState.fill = false; lightState.rim = true; lightState.haze = true;
+                if (keySlider) keySlider.value = 0;
+                if (cctSlider) cctSlider.value = 5600;
+                if (badge) badge.textContent = "PURE SILHOUETTE EDGE";
+                if (insight) insight.textContent = "Backlit Silhouette: Zero frontal light. The powerful rim kicker outlines the actor's head and shoulders against a dark background for suspense and heroic reveals.";
+            }
+
+            syncLightButtons();
+            updateGafferConsole();
+        }
+
+        function toggleLight(type) {
+            lightState[type] = !lightState[type];
+            syncLightButtons();
+            updateGafferConsole();
+        }
+
+        function syncLightButtons() {
+            ['key', 'fill', 'rim', 'haze'].forEach(t => {
+                const elem = document.getElementById('sim-' + t);
+                const btn = document.getElementById('btn-' + t);
+                const floorElem = document.getElementById('floor' + t.charAt(0).toUpperCase() + t.slice(1) + 'Light');
+                if (elem) elem.style.opacity = lightState[t] ? (t === 'haze' ? '0.8' : (t === 'fill' ? '0.7' : '1')) : '0';
+                if (btn) {
+                    btn.textContent = lightState[t] ? 'ON' : 'OFF';
+                    btn.className = lightState[t] ? 'btn-toggle on' : 'btn-toggle off';
+                }
+                if (floorElem) floorElem.style.opacity = lightState[t] ? '1' : '0.2';
+            });
+        }
+
+        function updateGafferConsole() {
+            const keySlider = document.getElementById('sliderKeyPower');
+            const cctSlider = document.getElementById('sliderCCT');
+            const keyElem = document.getElementById('sim-key');
+            const silhouette = document.getElementById('subjectSilhouette');
+            const hudRatio = document.getElementById('hudRatio');
+            const hudCCT = document.getElementById('hudCCT');
+            const hudKeyPower = document.getElementById('hudKeyPower');
+            const labelKey = document.getElementById('labelKeyPower');
+            const labelCCT = document.getElementById('labelCCT');
+
+            const keyVal = keySlider ? parseInt(keySlider.value) : 85;
+            const cctVal = cctSlider ? parseInt(cctSlider.value) : 3200;
+
+            if (labelKey) labelKey.textContent = keyVal + '%';
+            if (hudKeyPower) hudKeyPower.textContent = keyVal + '%';
+
+            // Calculate Kelvin Tint (3200K warm orange -> 5600K daylight cyan/white)
+            const factor = (cctVal - 3200) / (5600 - 3200);
+            const r = Math.round(251 - factor * (251 - 220));
+            const g = Math.round(191 + factor * (240 - 191));
+            const b = Math.round(36 + factor * (255 - 36));
+            const keyColor = `rgba(${r}, ${g}, ${b}, ${(keyVal / 100) * 0.55})`;
+
+            if (keyElem && lightState.key) {
+                keyElem.style.background = `linear-gradient(135deg, ${keyColor} 0%, rgba(${r}, ${g}, ${b}, 0.1) 60%, transparent 85%)`;
+                keyElem.style.opacity = (keyVal / 100).toString();
+            }
+
+            if (labelCCT && hudCCT) {
+                const cctName = cctVal <= 3600 ? `${cctVal}K Tungsten Warm` : (cctVal >= 5000 ? `${cctVal}K Cool Daylight` : `${cctVal}K Neutral Cine`);
+                labelCCT.textContent = cctName;
+                hudCCT.textContent = cctName;
+                hudCCT.style.color = cctVal <= 3600 ? 'var(--amber-warm)' : (cctVal >= 5000 ? 'var(--cyan-cine)' : '#ffffff');
+            }
+
+            // Real-time Subject Shadow Shading
+            if (silhouette) {
+                if (!lightState.key && !lightState.fill && !lightState.rim) {
+                    silhouette.style.filter = 'brightness(0.15) contrast(1.5)';
+                    silhouette.style.borderColor = 'rgba(255,255,255,0.05)';
+                    silhouette.style.boxShadow = 'none';
+                    hudRatio.textContent = 'Pitch Black (0:1)';
+                    hudRatio.style.color = 'var(--text-dim)';
+                } else if (!lightState.key && lightState.rim) {
+                    silhouette.style.filter = 'brightness(0.3)';
+                    silhouette.style.borderColor = 'var(--cyan-cine)';
+                    silhouette.style.boxShadow = '0 0 25px var(--cyan-cine)';
+                    hudRatio.textContent = 'Backlit Edge Silhouette';
+                    hudRatio.style.color = 'var(--cyan-cine)';
+                } else if (lightState.key && !lightState.fill) {
+                    silhouette.style.filter = 'brightness(0.9) contrast(1.5)';
+                    silhouette.style.borderColor = 'var(--amber-cine)';
+                    silhouette.style.boxShadow = '-10px 0 25px rgba(0,0,0,0.95)';
+                    hudRatio.textContent = '8:1 High-Contrast Chiaroscuro';
+                    hudRatio.style.color = 'var(--amber-cine)';
+                } else if (lightState.key && lightState.fill) {
+                    silhouette.style.filter = 'brightness(1.15) contrast(1.05)';
+                    silhouette.style.borderColor = 'rgba(255,255,255,0.35)';
+                    silhouette.style.boxShadow = '0 0 15px rgba(245,158,11,0.2)';
+                    const ratioText = keyVal > 80 ? '4:1 Dramatic Narrative' : '2:1 Soft Commercial';
+                    hudRatio.textContent = ratioText;
+                    hudRatio.style.color = '#10b981';
+                } else {
+                    silhouette.style.filter = 'brightness(0.55)';
+                    silhouette.style.borderColor = 'rgba(255,255,255,0.1)';
+                    silhouette.style.boxShadow = 'none';
+                    hudRatio.textContent = 'Soft Ambient Fill Only';
+                    hudRatio.style.color = 'var(--text-muted)';
+                }
+            }
+        }
+
+        function setLightingPreset(preset) {
+            if (preset === 'noir') {
+                setFacePattern('split');
+            } else if (preset === 'golden') {
+                setFacePattern('rembrandt');
+            } else if (preset === 'commercial') {
+                setFacePattern('butterfly');
+            } else {
+                setFacePattern('rembrandt');
+            }
+        }
+
+        // ===================================================
+        // 2. TWO-TIER PORTFOLIO FILTER (CRAFT + SUB-TYPES)
+        // ===================================================
+        const subTypesData = {
+            all: [
+                { id: "all", label: "All Specializations" }
+            ],
+            cinematography: [
+                { id: "all", label: "All Cinematography (4)" },
+                { id: "narrative", label: "🎬 Narrative & Short Films" },
+                { id: "music-video", label: "🎵 Music Videos & Stylized" },
+                { id: "commercial", label: "📺 Brand Commercials & Ads" },
+                { id: "documentary", label: "🎙️ Documentary & Interviews" }
+            ],
+            photography: [
+                { id: "all", label: "All Photography (4)" },
+                { id: "portrait", label: "👤 Portrait & Editorial" },
+                { id: "street", label: "🏙️ Street & Candid B&W" },
+                { id: "architecture", label: "🏛️ Architecture & Heritage" },
+                { id: "product", label: "⌚ Product & Tabletop" }
+            ],
+            editing: [
+                { id: "all", label: "All Video Editing (4)" },
+                { id: "color-grading", label: "🎨 S-Log3 Color Grading" },
+                { id: "music-edit", label: "⚡ Music Video Beat Cuts" },
+                { id: "commercial-edit", label: "📱 Commercial Ads & Reels" },
+                { id: "narrative-edit", label: "🎞️ Narrative Dialogue Cuts" }
+            ]
+        };
+
+        let activeCraft = "all";
+        let activeSubtype = "all";
+
+        function setMainCraft(craft) {
+            activeCraft = craft;
+            activeSubtype = "all";
+
+            // Update main tab active button
+            document.querySelectorAll('.main-craft-btn').forEach(btn => {
+                if (btn.getAttribute('data-craft') === craft) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // Re-render Tier 2 Sub-Chips
+            const subRow = document.getElementById('subCategoryRow');
+            const chips = subTypesData[craft] || subTypesData.all;
+
+            subRow.innerHTML = chips.map((c, idx) => `
+                <button onclick="filterBySubtype('${c.id}')" class="filter-btn subtype-btn ${idx === 0 ? 'active' : ''}" data-sub="${c.id}" style="font-size:0.68rem; padding:0.32rem 0.75rem;">
+                    ${c.label}
+                </button>
+            `).join('');
+
+            applyPortfolioFilter();
+        }
+
+        function filterBySubtype(sub) {
+            activeSubtype = sub;
+
+            document.querySelectorAll('.subtype-btn').forEach(btn => {
+                if (btn.getAttribute('data-sub') === sub) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            applyPortfolioFilter();
+        }
+
+        function applyPortfolioFilter() {
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach(card => {
+                const cardCraft = card.getAttribute('data-craft');
+                const cardSub = card.getAttribute('data-sub');
+
+                const matchCraft = (activeCraft === 'all' || cardCraft === activeCraft);
+                const matchSub = (activeSubtype === 'all' || cardSub === activeSubtype);
+
+                if (matchCraft && matchSub) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // ==========================================
+        // 3. COLOR GRADING SLIDER
+        // ==========================================
+        const splitCanvas = document.getElementById('splitCanvas');
+        const rawClip = document.getElementById('rawClip');
+        const handleLine = document.getElementById('handleLine');
+        const rangeInput = document.getElementById('rangeInput');
+
+        function updateSlider(val) {
+            val = Math.max(0, Math.min(100, val));
+            if (rawClip) rawClip.style.width = val + '%';
+            if (handleLine) handleLine.style.left = val + '%';
+            if (rangeInput) rangeInput.value = val;
+        }
+
+        if (rangeInput) {
+            rangeInput.addEventListener('input', (e) => updateSlider(e.target.value));
+        }
+
+        let dragging = false;
+        if (splitCanvas) {
+            splitCanvas.addEventListener('mousedown', () => dragging = true);
+            window.addEventListener('mouseup', () => dragging = false);
+            window.addEventListener('mousemove', (e) => {
+                if (!dragging) return;
+                const rect = splitCanvas.getBoundingClientRect();
+                const pct = ((e.clientX - rect.left) / rect.width) * 100;
+                updateSlider(pct);
+            });
+
+            splitCanvas.addEventListener('touchmove', (e) => {
+                const rect = splitCanvas.getBoundingClientRect();
+                const pct = ((e.touches[0].clientX - rect.left) / rect.width) * 100;
+                updateSlider(pct);
+            });
+        }
+
+        // ==========================================
+        // 4. PROJECT DETAIL MODAL
+        // ==========================================
+        function openDetail(title, cat, role, img, desc) {
+            document.getElementById('detailTitle').textContent = title;
+            document.getElementById('detailCat').textContent = cat + ' • ' + role;
+            document.getElementById('detailImg').src = img;
+            document.getElementById('detailDesc').textContent = desc;
+            document.getElementById('detailModal').classList.add('open');
+        }
+        function closeDetail() {
+            document.getElementById('detailModal').classList.remove('open');
+        }
+
+        // ==========================================
+        // 5. DIRECT WHATSAPP BRIEF BUILDER
+        // ==========================================
+        function sendWhatsAppBrief(e) {
+            e.preventDefault();
+            const name = document.getElementById('clientName').value;
+            const shootType = document.getElementById('shootType').value;
+            const hireRole = document.getElementById('hireRole').value;
+            const shootDate = document.getElementById('shootDate').value || 'Flexible';
+            const shootNotes = document.getElementById('shootNotes').value || 'Discussion';
+
+            const text = "*CINEMATOGRAPHY SHOOT INQUIRY (SATISH_VISION)*%0A%0A"
+                + "*Client/Production:* " + encodeURIComponent(name) + "%0A"
+                + "*Shoot Format:* " + encodeURIComponent(shootType) + "%0A"
+                + "*Role Needed:* " + encodeURIComponent(hireRole) + "%0A"
+                + "*Date / Location:* " + encodeURIComponent(shootDate) + "%0A"
+                + "*Notes:* " + encodeURIComponent(shootNotes) + "%0A%0A"
+                + "_Hi Satish, I saw your portfolio and would like to discuss this shoot with you._";
+
+            window.open("https://wa.me/" + MY_WHATSAPP + "?text=" + text, "_blank");
+        }
+    </script>
+</body>
+
+</html>
